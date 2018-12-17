@@ -1,0 +1,44 @@
+import React, {Component} from 'react';
+import { CircularProgress } from '@material-ui/core';
+
+class PostCreator extends Component {
+    constructor(){
+        super();
+        this.state = {
+            text: ''
+        }
+    }
+    
+    createPost(){
+        const newPost = {
+            content: this.state.text,
+            author: 'Baraky',
+            time: new Date().getTime(),
+            initialLikes: 0
+        }
+        this.props.onCreate(newPost);
+    }
+
+    render(){
+        return(
+            <div style={{padding:15}}>
+                <h3>New Post</h3>
+                <input
+                onChange={(event)=>{
+                    const value = event.target.value;
+                    this.setState({text: value})
+                }}
+                value={this.state.text}
+                style={{width: '100%'}} />
+                {this.props.isLoading
+                ? <CircularProgress />
+                : <button onClick={()=>this.createPost()}>
+                Post
+            </button>}
+                
+            </div>
+        )
+    }
+}
+
+export default PostCreator;
